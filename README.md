@@ -11,13 +11,13 @@ This repository contains mathematical solutions to two linear algebra problems f
 ## Problems Covered
 
 ### Question A: OLS Regression Analysis
-- **Part a**: Analyzing the relationship between individual OLS estimates and combined dataset estimates
-- **Part b**: Examining the effect of intercept terms on regression coefficients  
-- **Part c**: Statistical properties under multivariate Gaussian assumptions
+- **Part a**: Bounds of the pooled regression coefficient $\beta$ for concatenated data without intercept terms
+- **Part b**: Bounds of the pooled regression coefficient $\beta$ for concatenated data with intercept terms
+- **Part c**: Estimate of the regression coefficient $\beta$
 
 ### Question B: Forward Selection in Linear Regression
 - **Part a**: Efficient variable selection algorithm using QR decomposition
-- **Part b**: Computational methods for updating regression coefficients
+- **Part b**: Efficient computational methods for updating regression coefficients
 
 ## Mathematical Topics
 
