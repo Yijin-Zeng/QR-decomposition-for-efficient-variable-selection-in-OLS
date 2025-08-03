@@ -1,6 +1,6 @@
-# Two Linear Algebra Questions
+# QR decomposition for efficient variable selection in OLS
 
-This repository contains mathematical solutions to two linear algebra problems focused on ordinary least squares (OLS) regression analysis.
+This repository explains how QR decomposition can be used in OLS for efficient variables selections and parameters updating.
 
 ## Contents
 
