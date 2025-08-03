@@ -1,6 +1,6 @@
 # QR decomposition for efficient variable selection in OLS
 
-This repository explains how QR decomposition can be used in OLS for efficient variables selections and parameters updating.
+This repository explains how QR decomposition can be used in OLS for efficient variables selections and coefficient update.
 
 ## Contents
 
