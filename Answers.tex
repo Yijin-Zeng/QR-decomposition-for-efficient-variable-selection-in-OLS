@@ -1,0 +1,487 @@
+\documentclass[12pt]{article}
+
+%% set margins
+\usepackage[margin=1in]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+%opening
+\title{Answers to the questions}
+\author{Yijin Zeng}
+\date{}
+
+
+%new command
+\newcommand{\n}{n}
+\newcommand{\nln}[1]{\n_{1}}
+\newcommand{\m}{m}
+\newcommand{\mln}[1]{\m_{1}}
+\newcommand{\x}{x}
+\newcommand{\y}{y}
+\newcommand{\yln}[1]{y_{#1}}
+\newcommand{\xln}[1]{x_{#1}}
+\newcommand{\tran}[1]{{#1}^{T}}
+\newcommand{\bet}{\beta}
+\newcommand{\betln}[1]{\bet_{#1}}
+\newcommand{\loss}[1]{L\left(#1\right)}
+
+\newcommand{\mean}[1]{ \bar{#1} }
+
+
+\begin{document}
+\maketitle
+
+\section{Question A}
+
+\subsection{Question a}
+For this question, let us assume 
+$\tran{\xln{1}}\xln{1} > 0$, and $\tran{\xln{2}}\xln{2} > 0$,
+otherwise $\betln{1}$ and $\betln{2}$ are not well defined.
+
+According to the definition of OLS regression, we have
+\begin{align} \label{eqn:1}
+	\betln{1} = \underset{\bet}{\mathrm{argmax}}~\tran{(\yln{1} - \bet \xln{1})}(\yln{1} - \bet \xln{1})
+\end{align}
+Denote 
+\begin{align*}
+	&\loss{\bet} = \tran{(\yln{1} - \bet \xln{1})}(\yln{1} - \bet \xln{1}),\\
+	\Rightarrow& \frac{d L(\beta)}{d \beta} = -\tran{\xln{1}}(\yln{1} - \bet \xln{1}).
+\end{align*}
+Set $\frac{d L(\beta)}{d \beta} = 0$, we have
+\begin{align*}
+	\beta = \frac{\tran{\xln{1}}\yln{1}}{\tran{\xln{1}}\xln{1}},
+\end{align*}
+Notice that
+\begin{align*}
+	\frac{d^2 L(\beta)}{d \beta^2} = \tran{\xln{1}}\xln{1} > 0.
+\end{align*}
+Hence, according to equation \eqref{eqn:1}, we have 
+\begin{align*}
+	\betln{1}  =  \frac{\tran{\xln{1}}\yln{1}}{\tran{\xln{1}}\xln{1}}.
+\end{align*}
+Similarly, we can show that
+\begin{align*}
+		\betln{2}  =  \frac{\tran{\xln{2}}\yln{2}}{\tran{\xln{2}}\xln{2}}.
+\end{align*}
+Let us define $\x = \tran{(\tran{\xln{1}}~\tran{\xln{2}}) }$
+and $\y = \tran{(\tran{\yln{1}}~\tran{\yln{2}}) }$. Then, following
+the similar strategy as deriving $\betln{1} $, we obtain that
+\begin{align*}
+	\bet =  \frac{\tran{\x}\y}{\tran{\x}\x} = \frac{\tran{\xln{1}}\yln{1} + \tran{\xln{2}}\yln{2}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}}. 
+\end{align*}
+Notice that
+\begin{align*}
+	\betln{1} \tran{\xln{1}}\xln{1} = \tran{\xln{1}}\yln{1},
+	~\text{and}~
+	\betln{2} \tran{\xln{2}}\xln{2} = \tran{\xln{2}}\yln{2}.
+\end{align*}
+Hence,
+\begin{align}
+	\bet &= \frac{ \betln{1} \tran{\xln{1}}\xln{1} + \betln{2}\tran{\xln{2}}\xln{2}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} \nonumber\\
+	&  = \betln{1} \frac{\tran{\xln{1}}\xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} +  \betln{2} \frac{\tran{\xln{2}}\xln{2}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} \nonumber\\
+	& =  \betln{1} \frac{\tran{\xln{1}}\xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} +  \betln{2} \left(1 - \frac{\tran{\xln{1}}\xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} \right) \label{eqn:2}\\
+	& = (\betln{1}  - \betln{2}) \frac{\tran{\xln{1}}\xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}}
+	+ \betln{2} \nonumber
+\end{align}
+Therefore, we can see that for any given $\betln{1}$ and $\betln{2}$,
+$\bet$ is a function of $\frac{\tran{\xln{1}} \xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} \in (0,1)$. Hence, we have
+\begin{align*}
+	&\min \beta = \left\{ \begin{array}{ll}
+		 \betln{2} &~\mbox{if}~\betln{1} \ge \betln{2}, \\
+		 \betln{1} & \mbox{otherwise,}
+	\end{array}\right.,~~
+	\max \beta = \left\{ \begin{array}{ll}
+		\betln{1} &~\mbox{if}~\betln{1} \ge \betln{2}, \\
+		\betln{2} & \mbox{otherwise.}
+	\end{array}\right.
+\end{align*}
+Thus, we conclude that
+\begin{align*}
+	 \min\{ \betln{1}, \betln{2} \} \le \beta \le \max \{ \betln{1}, \betln{2} \}.
+\end{align*}
+
+
+\subsection{Question b}
+
+To start, let us denote 
+\begin{align*}
+    \xln{1} = \left( \begin{array}{cc}  \xln{1,1} \\
+    	\vdots\\
+    	\xln{1, \mln{1} } \end{array} \right),~\yln{1} = \left( \begin{array}{cc}  \yln{1,1} \\
+    	\vdots\\
+    	\yln{1, \mln{1} } \end{array} \right),~\xln{2} = \left( \begin{array}{cc}  \xln{2,1} \\
+    	\vdots\\
+    	\xln{2, \nln{1} } \end{array} \right),~\yln{2} = \left( \begin{array}{cc}  \yln{2,1} \\
+    	\vdots\\
+    	\yln{2, \nln{1} } \end{array} \right),
+\end{align*}
+Then, we define 
+\begin{align*}
+	\mean{\x}_1 = \frac{1}{\mln{1}} \sum_{i = 1}^{\mln{1}} \xln{1,i},~ 
+	\mean{\x}_2 = \frac{1}{\nln{1}} \sum_{i = 1}^{\nln{1}} \xln{2,i},~	
+	\mean{\y}_1 = \frac{1}{\mln{1}} \sum_{i = 1}^{\mln{1}} \yln{1,i},~ 
+	\mean{\y}_2 = \frac{1}{\nln{1}} \sum_{i = 1}^{\nln{1}} \yln{2,i},
+\end{align*}
+and
+\begin{align*}
+	\mean{\x} = \frac{1}{\mln{1} + \nln{1}} \left( \sum_{i = 1}^{\mln{1}} \xln{1,i}  + \sum_{i = 1}^{\nln{1}} \xln{2,i}  \right),~\mean{\y} = \frac{1}{\mln{1} + \nln{1}} \left( \sum_{i = 1}^{\mln{1}} \yln{1,i}  + \sum_{i = 1}^{\nln{1}} \yln{2,i}  \right).
+\end{align*}
+
+If the interception terms are added for all three models, 
+then using standard results of least square linear
+regression, we have
+\begin{align*}
+	\betln{1}= \frac{\sum_{i= 1}^{\mln{1}} ( \xln{1,i}  -  \mean{\x}_1 )(\yln{1,i}  - \mean{\y}_1)}{\sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{\x}_1)^2},
+	~\betln{2} = \frac{\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x}_2)(\yln{2,i}  - \mean{\y}_2)}{\sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x}_2)^2},
+\end{align*}
+and
+\begin{align*}
+	\bet = \frac{\sum_{i= 1}^{\mln{1}} ( \xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y}) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{2,i}  - \mean{\y}) }{\sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{\x})^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x})^2}
+\end{align*}
+
+
+Now, in order to consider how, when $\betln{1}$ and $\betln{2}$ are fixed,
+the parameter $\beta$ can change,
+let us consider a new data set 
+$\yln{3} \in \mathbb{R}^{\nln{1}}$ of the same size as $\yln{2}$,
+such that for any $i \in \{1, \ldots, \nln{1}\}$,
+\begin{align*}
+	\yln{3,i} &= \yln{2,i} + s_y,
+\end{align*}
+i.e. $\yln{3}$ is a shift of $\yln{2}$.
+Since the new data set is only a shift of $\yln{2}$,
+we have
+\begin{align*}
+	\mean{y}_3 = \mean{y}_2 + s_y.
+\end{align*}
+Importantly, the linear regression of $\yln{3}$ on $\xln{2}$ will
+have the same slope of the regression of $\yln{2}$
+on $\xln{2}$, i.e.
+\begin{align*}
+	\betln{3} &= \frac{\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x}_2)(\yln{3,i}  - \mean{\y}_3)}{\sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x}_2)^2} \\
+	& = \frac{\sum_{i= 1}^{\nln{1}} (\xln{2,i} - \mean{\x}_2)(\yln{2,i} +s_y - \mean{\y}_2 -s_y)}{\sum_{i=1}^{\nln{1}} (\xln{2,i}- \mean{\x}_2)^2}\\
+	& = \frac{\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x}_2)(\yln{2,i}  - \mean{\y}_2)}{\sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x}_2)^2}\\
+	& = \betln{2}.
+\end{align*}
+Denote 
+\begin{align*}
+	\mean{\y}' = \frac{1}{\mln{1} + \nln{1}} \left( \sum_{i = 1}^{\mln{1}} \yln{1,i}  + \sum_{i = 1}^{\nln{1}} \yln{3,i}  \right).
+\end{align*}
+We have
+\begin{align*}
+	\mean{\y}' = \mean{\y} + \frac{\nln{1}}{\nln{1} + \mln{1}} s_y.
+\end{align*}
+For notation ease, let us denote
+\begin{align*}
+	S_y = \frac{\nln{1}}{\nln{1} + \mln{1}} s_y.
+\end{align*}
+Subsequently, if we fit a linear regression of $y'$ onto $x$, where $y'$ is a concatenation of $y_1$ and $y_3$, we have the parameter
+associated with $x'$ equals to
+\begin{align*}
+	\bet' &= \frac{\sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y}') + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{3,i}  - \mean{\y}') }{\sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{\x})^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x})^2}\\
+	& = \frac{\sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y} - S_y) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{3,i}  - \mean{\y} - S_y) }{\sum_{i=1}^{\mln{1}} (\xln{1,i} -  \mean{\x})^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} -  \mean{\x})^2}
+\end{align*}
+Notice that the numerator of $\bet'$ is such that
+\begin{align*}
+	&\sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y} - S_y) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{3,i}  - \mean{\y} - S_y) \\
+	& = \sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y}) - S_y \sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x}) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{3,i}  - \mean{\y}) - S_y\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})\\
+	& = \sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y}) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{3,i}  - \mean{\y})\\
+	& = \sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y}) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{2,i} + s_y  - \mean{\y}) \\
+	& = \sum_{i= 1}^{\mln{1}} (\xln{1,i}  -  \mean{\x})(\yln{1,i}  - \mean{\y}) + \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})(\yln{2,i}  - \mean{\y}) + s_y\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x}).
+\end{align*}
+Hence
+\begin{align*}
+	\bet' = \beta + \frac{s_y\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x})}{\sum_{i=1}^{\mln{1}} (\xln{1,i} -  \mean{\x})^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} -  \mean{\x})^2}.
+\end{align*}
+Since $s_y$ can be any real number, when $\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x}) \neq 0$,
+we have
+\begin{align*}
+	\bet' \in (-\infty, \infty).
+\end{align*}
+If, however, $\sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{\x}) = 0$, then shifting
+$y_2$ alone will not change the value of coefficient associated with $\xln{2}$.
+In this case, one could still show that the coefficient of $\beta'$ is unbounded
+by consider shifting both $\xln{2}$ and $\yln{2}$, while
+keeping the coefficient of shifted $\xln{2}$ and $\yln{2}$ unchanged.
+
+Overall, since $\xln{2}, \yln{2}$ can be any data set such that the coefficient
+associated with $\xln{2}$ equals to $\betln{2}$, we have shown that if 
+the interception terms are added for all three models,  
+then $\bet$ is unbounded, i.e. $\bet \in (-\infty, \infty)$.
+
+
+%
+%Notice that the numerator of $\bet$ is such that
+%\begin{align*}
+%	&\sum_{i= 1}^{\mln{1}} ( \xln{1,i}  -  \mean{x})(\yln{1,i}  - \mean{y}) 
+%	+ \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -  \mean{x})(\yln{2,i}  - \mean{y}) \\
+%	& = \sum_{i= 1}^{\mln{1}} ( \xln{1,i}  -\mean{x}_1 -  \mean{x} + \mean{x}_1)(\yln{1,i} - \mean{y}_1 - \mean{y} + \mean{y}_1) 
+%	+ \sum_{i= 1}^{\nln{1}} ( \xln{2,i}  -\mean{x}_2 -  \mean{x} + \mean{x}_2)(\yln{2,i} - \mean{y}_2  - \mean{y} + \mean{y}_2)\\
+%	& = \sum_{i= 1}^{\mln{1}} \left[(\xln{1,i}  -  \mean{x}_1)(\yln{1,i}  - \mean{y}_1) - (\xln{1,i}  -  \mean{x})(\mean{y} - \mean{y}_1) - (\mean{x} - \mean{x}_1)(\yln{1,i}  - \mean{y}_1) + (\mean{x} - \mean{x}_1)(\mean{y} - \mean{y}_1) \right]\\
+%	& + \sum_{i= 1}^{\nln{1}} \left[(\xln{2,i}  -  \mean{x}_2)(\yln{2,i}  - \mean{y}_2) - (\xln{2,i}  -  \mean{x})(\mean{y} - \mean{y}_2) - (\mean{x} - \mean{x}_2)(\yln{2,i}  - \mean{y}_2) + (\mean{x} - \mean{x}_2)(\mean{y} - \mean{y}_2) \right],
+%\end{align*}
+%where
+%\begin{align*}
+%	\sum_{i= 1}^{\mln{1}}  (\xln{1,i}  -  \mean{x})(\mean{y} - \mean{y}_1) = 0, \sum_{i= 1}^{\mln{1}} (\mean{x} - \mean{x}_1)(\yln{1,i}  - \mean{y}_1) = 0,\\
+%	\sum_{i= 1}^{\nln{1}}  (\xln{2,i}  -  \mean{x})(\mean{y} - \mean{y}_2) = 0,	\sum_{i= 1}^{\nln{1}} (\mean{x} - \mean{x}_2)(\yln{2,i}  - \mean{y}_2) = 0.
+%\end{align*}
+%Hence the numerator of $\bet$ equals to
+%\begin{align*}
+%	\betln{1} \sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{x}_1)^2 
+%	+ \betln{2} \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{x}_2)^2
+%	+ \mln{1} (\mean{x}_1 - \mean{x})(\mean{y}_1 - \mean{y}) 
+%	+ \nln{1} (\mean{x}_2 - \mean{x})(\mean{y}_2 - \mean{y}).
+%\end{align*}
+%Similarly, the denominator of $\beta$ is such that 
+%\begin{align*}
+%	& \sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{\x})^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x})^2\\
+%	& =  \sum_{i=1}^{\mln{1}} (\xln{1, i} - \mean{\x}_1 + \mean{\x}_1 - \mean{\x})^2 + \sum_{i=1}^{\nln{1}} (\xln{2, i} - \mean{\x}_2 + \mean{\x}_2 - \mean{\x})^2\\
+%	&= \sum_{i=1}^{\mln{1}} \left[(\xln{1,i} - \mean{\x}_1)^2 + 2(\xln{1,i} - \mean{\x}_1)(\mean{\x}_1 - \mean{\x}) + (\mean{\x}_1 - \mean{\x})^2 \right]\\
+%	&+ \sum_{i=1}^{\nln{1}} \left[(\xln{2,i} - \mean{\x}_2)^2 + 2(\xln{2,i} - \mean{\x}_2)(\mean{\x}_2 - \mean{\x}) + (\mean{\x}_2 - \mean{\x})^2 \right]\\
+%	&= \sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{\x}_1)^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{\x}_2)^2 + \mln{1} (\mean{\x}_1 - \mean{\x})^2 + \nln{1} (\mean{\x}_2 - \mean{\x})^2.
+%\end{align*}
+%Hence, we have
+%\begin{align*}
+%	\bet = \frac{\betln{1} \sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{x}_1)^2 
+%		+ \betln{2} \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{x}_2)^2 
+%		+ \mln{1} (\mean{x}_1 - \mean{x})(\mean{y}_1 - \mean{y}) 
+%		+ \nln{1} (\mean{x}_2 - \mean{x})(\mean{y}_2 - \mean{y})}
+%	{\sum_{i=1}^{\mln{1}} (\xln{1,i} - \mean{x}_1)^2 + \sum_{i=1}^{\nln{1}} (\xln{2,i} - \mean{x}_2)^2 
+%		+ \mln{1} (\mean{x}_1 - \mean{x})^2 + \nln{1} (\mean{x}_2 - \mean{x})^2}.
+%\end{align*}
+
+\subsection{Question c}
+
+In Question a, equation \eqref{eqn:2} shows that
+\begin{align*}
+	\bet = \betln{1} \frac{\tran{\xln{1}}\xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} +  \betln{2} \left(1 - \frac{\tran{\xln{1}}\xln{1}}{\tran{\xln{1}}\xln{1} + \tran{\xln{2}}\xln{2}} \right),
+\end{align*}
+i.e. $\beta$ is a weighted average of $\betln{1}$ and $\betln{2}$,
+where the weights are determined by the variance of $\xln{1}$
+and $\xln{2}$ given they are both drawn from i.i.d zero-mean
+normal distribution.
+
+We are given that all pairs are drawn i.i.d. from a zero-mean 2D multivariate Gaussian distribution. Without loss of generality, let us denote that 
+\begin{align*}
+	\begin{bmatrix} X \\ Y \end{bmatrix} \sim \mathcal{N} \left(
+	\begin{bmatrix} 0 \\ 0 \end{bmatrix},
+	\begin{bmatrix} \sigma_x^2 & \sigma_{xy} \\ \sigma_{xy} & \sigma_y^2 \end{bmatrix}
+	\right).
+\end{align*}
+Then one reasonable assumption is that:
+\begin{align*}
+	&\tran{\xln{1}}\xln{1} \approx \mln{1}\sigma_x^2, \\
+	&\tran{\xln{2}}\xln{2} \approx \nln{1}\sigma_x^2.
+\end{align*}
+This is reasonable because $\tran{\xln{1}}\xln{1}$ and $\tran{\xln{2}}\xln{2}$
+are the maximum likelihood estimators of $\sigma_x^2$ given $\xln{1}$
+and $\xln{2}$, separately. The estimators are unbiased and consistent,
+meaning they are more accurate, in probability, given larger sample
+sizes $\nln{1}$ and $\mln{1}$.
+
+Thus, our guess for $\bet$ is
+\begin{align*}
+	\bet \approx \betln{1} \frac{\mln{1}}{\nln{1} + \mln{1}} + \betln{2} \frac{\nln{1}}{\nln{1} + \mln{1}}.
+\end{align*} 
+
+\clearpage
+\section{Question B}
+
+\subsection{Question a}
+
+To start, let us consider the linear regression model:
+\begin{align*}
+	Y &= X_1 \bet  + \epsilon.
+\end{align*}
+According to standard results of linear regression, we have
+\begin{align*}
+	\hat{Y} = X_1 (X_1^TX_1)^{-1}X_1^TY.
+\end{align*}
+Let us denote $P = X_1 (X_1^TX_1)^{-1}X_1^T$ as
+the projection matrix of $X_1$. Then using the results
+of QR decomposition, we have
+\begin{align*}
+	P &= QR(R^TQ^TQR)^{-1}R^TQ^T\\
+	&=QR(R^TR)^{-1}R^TQ^T\\
+	&=QQ^T.
+\end{align*}
+Hence, we have
+\begin{align*}
+	\hat{Y} = PY = QQ^TY.
+\end{align*}
+
+The sum of squared residuals of the model equals to
+\begin{align}
+	e^2 &= (Y-\hat{Y})^T(Y-\hat{Y})\nonumber\\
+	& = ((I - P)Y)^T((I-P)Y)\nonumber\\
+	& = Y^T(I-P)^T(I-P)Y\nonumber\\
+	& = Y^T(I-P)Y\nonumber\\
+	& = Y^T(I - QQ^T)Y \nonumber \\
+	& = Y^TY - Y^TQQ^TY.\label{eqn:3}
+\end{align}
+
+After obtaining the above results, let us now
+consider a new model 
+\begin{align}
+	Y &= X_1 \betln{\text{new}} + \gamma \xln{2, j} + \epsilon. \label{eqn:7}
+\end{align}
+In other words, the new model is the regression of $Y$ on $(X_1~x_{2,j})$.
+Let us assume $x_{2,j}$ is not in the column space of $X_1$, otherwise
+the model does not have a unique solution.
+
+Let us denote
+\begin{align*}
+	X_{2} = (X_1~x_{2,j} ).
+\end{align*}
+Then, following  the Gram–Schmidt process for QR decomposition,
+we have the QR decomposition of $X_{2}$ is:
+\begin{align}
+	X_2  = Q_2R_2 = (Q~q_j)  \left( \begin{array}{cc}  R&r_{1,j} \\
+		0&r_{2,j} \end{array} \right). \label{eqn:8}
+\end{align}
+To see this, we can perform the Gram–Schmidt process for 
+$X_2$, where each column of $Q$ is generated by the column
+of $X_2$ minus its projection on the column space generated by
+the previous column of $X_2$, and $R$ is an upper matrix where
+each column is the coefficients to represent the same column  of
+$X_2$ using the all columns so far of $R$ as basis.
+
+Subsequently, using the result of equation \eqref{eqn:3},
+we have the sum of squared residuals of the new model 
+equals to
+\begin{align*}
+	e_{\text{new}}^2 &= Y^TY - Y^TQ_2Q_2^TY\\
+	&= Y^TY - Y^TQQ^TY - Y^T q_jq_j^TY\\
+	&=e^2 - Y^T q_jq_j^TY.
+\end{align*}
+Hence, the reduce error by introducing $x_{2,j}$ equals to
+\begin{align*}
+	e^2 - e_{\text{new}}^2 =  Y^T q_jq_j^TY.
+\end{align*}
+Therefore, to choose $x_{2,j}$ reduces the most residual sum of squares,
+we want it to maximize the absolute value of its
+inner product between $Y$ and $q_j$.
+
+For each $j$, $q_j$ can be found by performing the
+Gram–Schmidt process again,
+\begin{align}
+	u_j = x_{2,j} - QQ^Tx_{2,j}, \label{eqn:4}\\
+   q_j = u_j / ||u_j||. \label{eqn:5}
+\end{align}
+
+Therefore, one efficient strategy to obtain the additional
+variable to minimize the residual sum of squares is
+for any $j \in \{1, \ldots, f-k\}$,
+to consider the orthogonal component of $\xln{2,j}$ to $X_1$ following 
+equation \eqref{eqn:4}, and standardize this component using
+equation \eqref{eqn:5}, and choose the $j$ which maximize
+the absolute value of the inner product with $Y$. More specifically,
+we should choose $x_{2,j^*}$ such that
+\begin{align}
+	j^* =  \underset{j \in \{1, \ldots, f-k\}}{\mathrm{argmax}}~ \frac{|(x_{2,j} - QQ^Tx_{2,j})^TY |}{||x_{2,j} - QQ^Tx_{2,j}||}. \label{eqn:6}
+\end{align}
+
+Let us analyze the computational complexity of this strategy 
+by using equation \eqref{eqn:6}. Since we know the QR composition of
+$X_1$, we assume $Q$ is known. As Q is of shape $n \times k$,
+$Q^T x_{2,j}$ requires computational complexity $O(nk)$, and then
+$QQ^Tx_{2,j}$ also requires computational complexity $O(nk)$.
+After obtaining $QQ^Tx_{2,j}$, computing $|(x_{2,j} - QQ^Tx_{2,j})^TY |$
+and ${||x_{2,j} - QQ^Tx_{2,j}||}$ both
+require computational complexity $O(n)$. 
+Hence, evaluating equation \eqref{eqn:6} for each single $j \in \{1, \ldots, f-k\}$
+requires $O(nk)$.  Notice that there are $f-k$ number of $j$'s to evaluate in total.
+This strategy requires computational time of $O((f-k)(nk))$. 
+
+If, however, we naively re-fitting a new model when $x_{2,j}$ is added
+for each $j \in \{1, \ldots, f-k\}$,
+we will have overall computational complexity of $O((f-k)(k+1)^2n)$
+since fitting one linear regression typically requires $O((k+1)^2n)$.
+Therefore, our strategy using equation \eqref{eqn:6} is more efficient
+than naively refitting a new model every time, and it will be particularly
+useful when $k$ is large.
+
+\subsection{Question b}
+
+ Suppose we have chosen a variable $x_{2,j}$ according to 
+ \eqref{eqn:6}, and we are interested in finding the coefficients
+ in \eqref{eqn:7}, i.e. $\betln{\text{new}}$, and $\gamma$ below:
+ \begin{align} \label{eqn:14}
+ 	Y &= X_1 \betln{\text{new}} + \gamma \xln{2, j} + \epsilon. 
+ \end{align}
+ 
+
+Denote $X_2 = (X_1~x_{2,j} )$, then according to standard results of linear regression, we know that
+ \begin{align*}
+ 	 \left( \begin{array}{cc}  \betln{\text{new}} \\
+ 		\gamma \end{array} \right) &= (X_2^TX_2)^{-1}X_2^TY\\
+ 		& = (R_2^TQ_2^TQ_2R_2)^{-1}R_2^TQ_2^TY\\
+ 		& = R_2^{-1}Q_2^TY.
+ \end{align*}
+ Hence, we have
+ \begin{align*}
+ 	R_2 \left( \begin{array}{cc}  \betln{\text{new}} \\
+ 		\gamma \end{array} \right) = Q_2^TY.
+ \end{align*}
+ Using equation \eqref{eqn:8}, we further obtain that:
+ \begin{align}
+ 	& \left( \begin{array}{cc}  R&r_{1,j} \\
+ 		0&r_{2,j} \end{array} \right) \left( \begin{array}{cc}  \betln{\text{new}} \\
+ 		\gamma \end{array} \right) = \left( \begin{array}{cc}  Q^T \\
+ 		q_{2,j}^T \end{array} \right) Y \nonumber \\
+ 	\Rightarrow & \gamma  = (q_{2,j}^T Y)/(r_{2,j}), ~\betln{\text{new}} = R^{-1}Q^TY - R^{-1}r_{1,j} \gamma. \label{eqn:9}
+ \end{align}
+ 
+ In order to solve \eqref{eqn:9}, we need to know the values
+ of $r_{2,j}$ and $r_{1,j}$. Notice that from equation \eqref{eqn:8}, 
+ we have
+ \begin{align*}
+ 	&x_{2,j} = Qr_{1,j} + q_{j}r_{2,j} \\
+ 	\Rightarrow & Q^Tx_{2,j} = Q^TQ r_{1,j} + Q^Tq_jr_{2,j}.
+ \end{align*}
+ Since $Q$ is an orthonormal matrix and $q_j$ is orthogonal
+ to $Q$, we have
+ \begin{align}
+ 	r_{1,j} = Q^Tx_{2,j}, \label{eqn:10}
+ \end{align}  
+ which is already computed in Question (a).
+ 
+ Similarly, to compute $r_{2,j}$, we start from equation \eqref{eqn:8},
+  \begin{align}
+ 	&x_{2,j} = Qr_{1,j} + q_{j}r_{2,j}, \nonumber\\
+ 	\Rightarrow & q_j^Tx_{2,j} = q_j^TQ r_{1,j} + q_j^Tq_jr_{2,j},\nonumber\\
+ 	\Rightarrow & q_j^Tx_{2,j} = r_{2,j}. \label{eqn:11}
+ \end{align}
+
+Put equation \eqref{eqn:11} back to equation \eqref{eqn:9},
+we have $\gamma$ equals to:
+\begin{align}
+	\gamma = (q_{2,j}^T Y)/(q_j^Tx_{2,j}). \label{eqn:12}
+\end{align}
+To solve $\betln{\text{new}}$, we notice that
+\begin{align*}
+	 R^{-1}Q^TY = \beta, 
+\end{align*}
+and $R^{-1}r_{1,j}$ can be computed by solving
+the $v$ below:
+\begin{align}
+	Rv = r_{1,j} \label{eqn:13}, 
+\end{align}
+which requires $O(k^2)$ since $R$ is an upper triangle
+matrix. Hence we have
+\begin{align}
+	\betln{\text{new}} = \beta - v\gamma,  \label{eqn:15}
+\end{align}
+where $\gamma$ $v$ are defined in $\eqref{eqn:12}$,
+and $\eqref{eqn:13}$, respectively.
+ 
+Overall, we can compute the coefficients $(\betln{\text{new}},\gamma)$ of the new model
+defined in \eqref{eqn:14} using equations $\eqref{eqn:12}$
+and $\eqref{eqn:15}$. The computational complexity
+of solving the two equations is 
+$O(n + k^2)$ provided $Q^Tx_{2,j}$ has already 
+been computed in Question (a).
+
+
+\end{document}
